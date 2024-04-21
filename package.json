@@ -1,0 +1,17 @@
+{
+  "name": "plant-shop",
+  "version": "0.1.0",
+  "main": "server.js",
+  "scripts": {
+    "setup": "echo \"Setup is missing\"",
+    "format": "prettier --write ./server.js ./public",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5"
+  }
+}
