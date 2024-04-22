@@ -1,0 +1,148 @@
+/* Banner */
+.banner {
+  width: 100%;
+  height: 220px;
+  position: relative;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.banner h1 {
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  color: #1a130e;
+  margin: 0px;
+}
+.banner p {
+  font-size: 16px;
+  text-align: center;
+  color: #5e5956;
+  margin-top: 20px;
+  max-width: 230px;
+}
+.banner img {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media screen and (min-width: 768px) {
+  .banner {
+    height: 440px;
+    padding: 50px 20px;
+  }
+  .banner h1 {
+    font-size: 40px;
+  }
+  .banner p {
+    font-size: 22px;
+    margin-top: 30px;
+    max-width: 280px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .banner {
+    height: 736px;
+    padding: 130px 40px;
+  }
+  .banner h1 {
+    font-size: 60px;
+  }
+  .banner p {
+    font-size: 30px;
+    margin-top: 40px;
+    max-width: 400px;
+  }
+}
+
+/* Plant list */
+.plant-list {
+  list-style: none;
+  padding: 5px;
+  margin: 0px;
+}
+.plant-list li {
+  height: 200px;
+  width: 100%;
+  display: block;
+  padding: 5px;
+  box-sizing: border-box;
+}
+.plant-list a {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.plant-list h2 {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  color: #1a130e;
+  margin: 0px;
+}
+.plant-list p {
+  font-size: 15px;
+  text-align: center;
+  color: #5e5956;
+  margin-top: 10px;
+}
+.plant-list img {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media screen and (min-width: 768px) {
+  .plant-list {
+    padding: 10px;
+  }
+  .plant-list li {
+    height: 400px;
+    padding: 10px;
+  }
+  .plant-list a {
+    padding: 20px;
+  }
+  .plant-list h2 {
+    font-size: 28px;
+  }
+  .plant-list p {
+    font-size: 18px;
+    margin-top: 15px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .plant-list {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .plant-list li {
+    width: 50%;
+    height: 500px;
+    padding: 20px;
+  }
+  .plant-list a {
+    padding: 55px;
+  }
+  .plant-list h2 {
+    font-size: 40px;
+  }
+  .plant-list p {
+    font-size: 22px;
+    margin-top: 20px;
+  }
+}

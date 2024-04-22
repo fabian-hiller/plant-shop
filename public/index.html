@@ -3,9 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello, world!</title>
+    <title>Plant Shop</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/styles/home.css" />
+    <script src="/scripts/global.js" defer></script>
+    <script src="/scripts/home.js" defer></script>
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <!-- Header -->
+    <header class="header">
+      <nav>
+        <a id="cart-button" href="/cart.html">
+          <img src="/images/cart-icon.png" alt="Cart icon" />
+          <span></span>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Banner -->
+      <div class="banner">
+        <h1>Plant Shop</h1>
+        <p>Have plants delivered directly to your door!</p>
+        <img src="/images/banner.jpg" alt="Leaves of a plant" />
+      </div>
+
+      <!-- Plant list -->
+      <ul id="plant-list" class="plant-list"></ul>
+      <template id="plant-item">
+        <li>
+          <a>
+            <h2></h2>
+            <p></p>
+            <img />
+          </a>
+        </li>
+      </template>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div>Copyright © 2024</div>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/cart.html">Cart</a>
+      </nav>
+    </footer>
   </body>
 </html>

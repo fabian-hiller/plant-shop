@@ -1,0 +1,135 @@
+/* Global */
+html,
+body {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Arial,
+    sans-serif;
+  margin: 0;
+}
+
+/* Header */
+.header {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+}
+.header nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+.header a:only-child {
+  margin-left: auto;
+}
+.header a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  background-color: #1a130e;
+}
+.header img {
+  height: 18px;
+}
+.header span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: #c35339;
+  font-weight: 900;
+  color: #ffffff;
+  font-size: 9px;
+}
+@media screen and (min-width: 768px) {
+  .header nav {
+    padding: 25px;
+  }
+  .header a {
+    width: 50px;
+    height: 50px;
+  }
+  .header img {
+    height: 21px;
+  }
+  .header span {
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .header nav {
+    padding: 40px;
+  }
+  .header a {
+    width: 60px;
+    height: 60px;
+  }
+  .header img {
+    height: 24px;
+  }
+  .header span {
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+  }
+}
+
+/* Footer */
+.footer {
+  padding: 20px 20px 30px 20px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+.footer div {
+  font-size: 15px;
+  text-align: center;
+  color: #8c8986;
+  margin-top: 15px;
+}
+.footer a {
+  font-size: 15px;
+  color: #8c8986;
+  margin: 0 10px;
+  text-decoration: none;
+}
+@media screen and (min-width: 768px) {
+  .footer {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 20px 30px 20px;
+  }
+  .footer div {
+    font-size: 17px;
+    margin: 0;
+  }
+  .footer a {
+    font-size: 17px;
+    margin: 0 0 0 20px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .footer {
+    padding: 0 40px 40px 40px;
+  }
+  .footer div {
+    font-size: 18px;
+  }
+  .footer a {
+    font-size: 18px;
+    margin-left: 30px;
+  }
+}
