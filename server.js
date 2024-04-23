@@ -1,5 +1,6 @@
 // Import dependencies
 const express = require("express");
+const db = require("./database");
 
 // Setup express app
 const app = express();
