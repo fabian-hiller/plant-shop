@@ -1,7 +1,10 @@
+/* To drop database if necessary */
+DROP DATABASE IF EXISTS plant_shop_database;
 
 /* To create database */
 
 CREATE DATABASE plant_shop_database;
+USE plant_shop_database;
 
 /* To create tables */
 
