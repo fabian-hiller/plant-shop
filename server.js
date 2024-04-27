@@ -21,3 +21,17 @@ app.get('/products', function (req, res) {
 		}
 	});
 });
+
+// 2. Get Product Details
+
+app.get('/products/:productid', function (req, res) {
+	const id = req.params['productid'];
+	let query = 'select plantname, plantsize, price from plant, plantsize where plantsize.plantid=plant.plantid AND plant.plantid=' + id;
+	db.query(query, function (error, results, fields) {
+		if (error) {
+			res.status(500).send('Internal Error');
+		} else {
+			res.json(results);
+		}
+	});
+});
