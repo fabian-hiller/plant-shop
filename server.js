@@ -29,40 +29,37 @@ app.get('/', function(req, res, next) {
   }
 }) */
 
-// 1. Get All Products
-
-app.get('/products', function (req, res) {
-	let query = 'select distinct plant.PlantId, PlantName, ImageURL, price as "StartPrice" from plant, plantsize where plant.plantid=plantsize.plantid AND plantsize="small"';
-	db.query(query, function (error, results, fields) {
-		if (error) {
-			res.status(500).send('Internal Error');
-		} else {
-			if (results.length === 0) {
-				res.status(500).send('Not Found');
-			} else {
-				res.json(results);
-				
-			}
-		}
-	});
+// 1. Get all Products
+app.get("/products", (_, res) => {
+  let query =
+    'SELECT Plant.PlantID, PlantName, ImageURL, Price as "StartPrice" from Plant, PlantSize WHERE Plant.PlantID=PlantSize.PlantID AND PlantSize="small"';
+  db.query(query, (error, results) => {
+    if (error) {
+      res.status(500).send("Internal Error");
+    } else {
+      res.json(results);
+    }
+  });
 });
 
 // 2. Get Product Details
 
-app.get('/products/:productid', function (req, res) {
-	const id = req.params['productid'];
-	let query = 'select plantname, plantsize, price from plant, plantsize where plantsize.plantid=plant.plantid AND plant.plantid=' + id;
-	db.query(query, function (error, results, fields) {
-		if (error) {
-			res.status(500).send('Internal Error');
-		} else {
-			if (results.length === 0) {
-				res.status(500).send('Not Found');
-			} else {
-				res.json(results);
-			}
-		}
-	});
+app.get("/products/:productid", function (req, res) {
+  const id = req.params["productid"];
+  let query =
+    "select plantname, plantsize, price from plant, plantsize where plantsize.plantid=plant.plantid AND plant.plantid=" +
+    id;
+  db.query(query, function (error, results, fields) {
+    if (error) {
+      res.status(500).send("Internal Error");
+    } else {
+      if (results.length === 0) {
+        res.status(500).send("Not Found");
+      } else {
+        res.json(results);
+      }
+    }
+  });
 });
 
 /* // 3. Add Product to Cart
@@ -157,48 +154,47 @@ app.post('/cart/items', function (req, res) {
 				cookie: { secure: false }
 			})) */
 
-	// else
-		// use previously generated session ID
-			// 'insert into table cartitems (cartitemid, sessionid,) */
+// else
+// use previously generated session ID
+// 'insert into table cartitems (cartitemid, sessionid,) */
 
-	
 // 4. Get Cart Details
 
-app.get('/cart/items', function (req, res) {
-	let query = 'select * from cartitem';
-	db.query(query, function (error, results, fields) {
-		if (error) {
-			res.status(500).send('Internal Error');
-		} else {
-			if (results.length === 0) {
-				res.status(500).send('Not Found');
-			res.json(results);
-			}
-		}
-	});
+app.get("/cart/items", function (req, res) {
+  let query = "select * from cartitem";
+  db.query(query, function (error, results, fields) {
+    if (error) {
+      res.status(500).send("Internal Error");
+    } else {
+      if (results.length === 0) {
+        res.status(500).send("Not Found");
+        res.json(results);
+      }
+    }
+  });
 });
 
 // 5. Remove Item from Cart
 
-app.delete('/cart/items/:cartitemid', function (req, res) {
-	const id = req.params['cartitemid'];
-	let query = 'delete from cartitem where cartitemid =' + cartitemid;
-	db.query(query, function (error, results, fields) {
-		if (error) {
-			res.status(500).send('Internal Error');
-		} else {
-			if (results.length === 0) {
-				res.status(500).send('Not Found');
-			res.json(results);
-			res.post('Item removed.')
-			}
-		}
-	});
+app.delete("/cart/items/:cartitemid", function (req, res) {
+  const id = req.params["cartitemid"];
+  let query = "delete from cartitem where cartitemid =" + cartitemid;
+  db.query(query, function (error, results, fields) {
+    if (error) {
+      res.status(500).send("Internal Error");
+    } else {
+      if (results.length === 0) {
+        res.status(500).send("Not Found");
+        res.json(results);
+        res.post("Item removed.");
+      }
+    }
+  });
 });
-	
+
 // 6. Error Page
 
-app.get('/error', function (req, res) {
-	res.set("Content-Type", "text/plain");
-	res.status(400).send('Error, Bad Request!');
+app.get("/error", function (req, res) {
+  res.set("Content-Type", "text/plain");
+  res.status(400).send("Error, Bad Request!");
 });
