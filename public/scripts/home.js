@@ -3,7 +3,7 @@ const plantListElement = document.getElementById("plant-list");
 const plantItemTemplate = document.getElementById("plant-item");
 
 // Fetch plant list from server
-const plantList = await (await fetch("/products")).json();
+const plantList = await (await fetch("/plants")).json();
 
 // Add items to plant list
 for (const plant of plantList) {

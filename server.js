@@ -21,8 +21,8 @@ app.use(
   })
 );
 
-// 1. Get all Products
-app.get("/products", (_, res) => {
+// Get all plants
+app.get("/plants", (_, res) => {
   db.query(
     'SELECT Plant.PlantID, PlantName, ImageURL, Price as "StartPrice" from Plant, PlantSize WHERE Plant.PlantID=PlantSize.PlantID AND PlantSize="small"',
     (error, results) => {
@@ -35,10 +35,9 @@ app.get("/products", (_, res) => {
   );
 });
 
-// 2. Get Product Details
-
-app.get("/products/:productid", function (req, res) {
-  const id = req.params["productid"];
+// Get plant details
+app.get("/plants/:PlantID", function (req, res) {
+  const id = req.params["PlantID"];
   let query =
     "select plantname, plantsize, price from plant, plantsize where plantsize.plantid=plant.plantid AND plant.plantid=" +
     id;
@@ -151,8 +150,7 @@ app.post('/cart/items', function (req, res) {
 // use previously generated session ID
 // 'insert into table cartitems (cartitemid, sessionid,) */
 
-// 4. Get Cart Details
-
+// Get cart items
 app.get("/cart/items", function (req, res) {
   let query = "select * from cartitem";
   db.query(query, function (error, results, fields) {
@@ -182,8 +180,7 @@ app.get("/cart/items/count", (req, res) => {
   );
 });
 
-// 5. Remove Item from Cart
-
+// Remove item from cart
 app.delete("/cart/items/:cartitemid", function (req, res) {
   const id = req.params["cartitemid"];
   let query = "delete from cartitem where cartitemid =" + cartitemid;
@@ -198,11 +195,4 @@ app.delete("/cart/items/:cartitemid", function (req, res) {
       }
     }
   });
-});
-
-// 6. Error Page
-
-app.get("/error", function (req, res) {
-  res.set("Content-Type", "text/plain");
-  res.status(400).send("Error, Bad Request!");
 });
