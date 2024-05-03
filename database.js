@@ -1,20 +1,22 @@
+// Import dependencies
 const mysql = require("mysql");
 
-/* To create connection*/
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "plantshop",
-  password: "plantshop",
-  database: "plant_shop_database",
+// Connect to MySQL database
+const db = mysql.createConnection({
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "1234",
+  database: process.env.DB_DATABASE || "plant_shop_database",
 });
 
-/* To connect to MySQL*/
-connection.connect((err) => {
-  if (err) {
-    console.error("Error - Database connection failed." + err.stack);
-    return;
+// Log database connection status
+db.connect((error) => {
+  if (error) {
+    console.error("Database Error:", error.sqlMessage);
+  } else {
+    console.log("Successfully connected to the database!");
   }
-  console.log("Successfully connected to the database!");
 });
 
-module.exports = connection;
+// Export database connection
+module.exports = db;
