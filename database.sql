@@ -26,7 +26,7 @@ CREATE TABLE CartItem (
     CartItemID INT PRIMARY KEY,
     PlantID INT,
     PlantSizeID INT,
-    SessionID INT,
+    SessionID CHAR(32),
     FOREIGN KEY (PlantID) REFERENCES Plant(PlantID) ON DELETE CASCADE,
     FOREIGN KEY (PlantSizeID) REFERENCES PlantSize(PlantSizeID) ON DELETE CASCADE
 );

@@ -3,46 +3,36 @@ require("dotenv").config();
 
 // Import dependencies
 const express = require("express");
+const session = require("express-session");
 const db = require("./database");
 
 // Setup express app
 const app = express();
 app.use(express.static("public"));
-app.listen(3000, () => console.log("http://localhost:3000"));
+app.listen(3000, () => console.log("Website URL: http://localhost:3000"));
 
-/*// Setup SessionID and Cookies
-const uuid = require('uuid');
-const session = require('express-session');
-
-// API routes go here
-
-app.use(session({ resave: true, saveUninitialized: false, secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
-
-// Access the session as req.session
-app.get('/', function(req, res, next) {
-  if (req.session.views) {
-    req.session.views++
-    res.setHeader('Content-Type', 'text/html')
-    res.write('<p>views: ' + req.session.views + '</p>')
-    res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
-    res.end()
-  } else {
-    req.session.views = 1
-    res.end('welcome to the session demo. refresh!')
-  }
-}) */
+// Setup express session
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "HAW9b7PAtB",
+    saveUninitialized: true,
+    resave: false,
+    cookie: { maxAge: 2.592e9 }, // 30 days
+  })
+);
 
 // 1. Get all Products
 app.get("/products", (_, res) => {
-  let query =
-    'SELECT Plant.PlantID, PlantName, ImageURL, Price as "StartPrice" from Plant, PlantSize WHERE Plant.PlantID=PlantSize.PlantID AND PlantSize="small"';
-  db.query(query, (error, results) => {
-    if (error) {
-      res.status(500).send("Internal Error");
-    } else {
-      res.json(results);
+  db.query(
+    'SELECT Plant.PlantID, PlantName, ImageURL, Price as "StartPrice" from Plant, PlantSize WHERE Plant.PlantID=PlantSize.PlantID AND PlantSize="small"',
+    (error, results) => {
+      if (error) {
+        res.status(500).send("Internal Error");
+      } else {
+        res.json(results);
+      }
     }
-  });
+  );
 });
 
 // 2. Get Product Details
@@ -175,6 +165,21 @@ app.get("/cart/items", function (req, res) {
       }
     }
   });
+});
+
+// Get cart items count
+app.get("/cart/items/count", (req, res) => {
+  db.query(
+    'SELECT COUNT(*) as "count" FROM CartItem WHERE SessionID = ?',
+    [req.sessionID],
+    (error, results) => {
+      if (error) {
+        res.status(500).send("Internal Error");
+      } else {
+        res.json(results[0].count);
+      }
+    }
+  );
 });
 
 // 5. Remove Item from Cart
