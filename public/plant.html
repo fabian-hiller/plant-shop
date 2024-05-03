@@ -24,47 +24,19 @@
     </header>
 
     <main>
-      <!-- TODO: Add content -->
-      <div id="plant-item" class="plant-item">
-        <h2></h2>
-        <p></p>
-        <img />
-        <div class="plant-size-wrapper">
-          <button
-            class="size-button"
-            id="small-button"
-            onclick="onClickSmallSize()"
-          >
-            Small
-          </button>
-          <button
-            class="size-button"
-            id="medium-button"
-            onclick="onClickMediumSize()"
-          >
-            Medium
-          </button>
-          <button
-            class="size-button"
-            id="large-button"
-            onclick="onClickLargeSize()"
-          >
-            Large
-          </button>
-          <button
-            class="cancel-button"
-            id="cancel-button"
-            onclick="onClickCancel()"
-          >
-            Cancel
-          </button>
-        </div>
-        <div class="add-cart-wrapper">
-          <button class="add-cart-button" onclick="onAddToCart()">
-            Add to Cart
-          </button>
-        </div>
-      </div>
+      <!-- Plant details -->
+      <h1></h1>
+      <p></p>
+      <img />
+
+      <!-- Cart form -->
+      <form>
+        <input type="hidden" name="PlantID" />
+        <select name="PlantSizeID" required>
+          <option value="" selected disabled hidden>Select Size</option>
+        </select>
+        <button type="submit">Add to Cart</button>
+      </form>
     </main>
 
     <!-- Footer -->

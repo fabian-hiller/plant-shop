@@ -3,17 +3,20 @@ require("dotenv").config();
 
 // Import dependencies
 const express = require("express");
+const bodyParser = require("body-parser");
 const session = require("express-session");
 const db = require("./database");
 
 // Setup express app
 const app = express();
 app.use(express.static("public"));
+app.use(bodyParser.json());
 app.listen(3000, () => console.log("Website URL: http://localhost:3000"));
 
 // Setup express session
 app.use(
   session({
+    name: "SessionID",
     secret: process.env.SESSION_SECRET || "HAW9b7PAtB",
     saveUninitialized: true,
     resave: false,
@@ -49,7 +52,7 @@ app.get("/plants/:PlantID", (req, res) => {
         } else {
           const plant = results[0];
           db.query(
-            "SELECT PlantSize, Price FROM PlantSize WHERE PlantID = ?",
+            "SELECT PlantSizeID, PlantSize, Price FROM PlantSize WHERE PlantID = ?",
             [req.params["PlantID"]],
             (error, results) => {
               if (error) {
@@ -65,6 +68,22 @@ app.get("/plants/:PlantID", (req, res) => {
             }
           );
         }
+      }
+    }
+  );
+});
+
+// Add plant to cart
+app.post("/cart/items", (req, res) => {
+  db.query(
+    "INSERT INTO CartItem(PlantID, PlantSizeID, SessionID) VALUES(?, ?, ?)",
+    [req.body.PlantID, req.body.PlantSizeID, req.sessionID],
+    (error) => {
+      if (error) {
+        console.log(error);
+        res.status(500).send("Internal Error");
+      } else {
+        res.send("Success");
       }
     }
   );
