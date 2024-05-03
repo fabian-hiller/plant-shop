@@ -24,7 +24,7 @@ app.use(
 // Get all plants
 app.get("/plants", (_, res) => {
   db.query(
-    'SELECT Plant.PlantID, PlantName, ImageURL, Price as "StartPrice" from Plant, PlantSize WHERE Plant.PlantID=PlantSize.PlantID AND PlantSize="small"',
+    'SELECT Plant.PlantID, PlantName, ImageURL, Price as "StartPrice" FROM Plant, PlantSize WHERE Plant.PlantID = PlantSize.PlantID AND PlantSize = "small"',
     (error, results) => {
       if (error) {
         res.status(500).send("Internal Error");
@@ -36,22 +36,38 @@ app.get("/plants", (_, res) => {
 });
 
 // Get plant details
-app.get("/plants/:PlantID", function (req, res) {
-  const id = req.params["PlantID"];
-  let query =
-    "select plantname, plantsize, price from plant, plantsize where plantsize.plantid=plant.plantid AND plant.plantid=" +
-    id;
-  db.query(query, function (error, results, fields) {
-    if (error) {
-      res.status(500).send("Internal Error");
-    } else {
-      if (results.length === 0) {
-        res.status(500).send("Not Found");
+app.get("/plants/:PlantID", (req, res) => {
+  db.query(
+    "SELECT PlantID, PlantName, ImageURL FROM Plant WHERE PlantID = ?",
+    [req.params["PlantID"]],
+    (error, results) => {
+      if (error) {
+        res.status(500).send("Internal Error");
       } else {
-        res.json(results);
+        if (results.length === 0) {
+          res.status(404).send("Not Found");
+        } else {
+          const plant = results[0];
+          db.query(
+            "SELECT PlantSize, Price FROM PlantSize WHERE PlantID = ?",
+            [req.params["PlantID"]],
+            (error, results) => {
+              if (error) {
+                res.status(500).send("Internal Error");
+              } else {
+                if (results.length === 0) {
+                  res.status(404).send("Not Found");
+                } else {
+                  plant.Sizes = results;
+                  res.json(plant);
+                }
+              }
+            }
+          );
+        }
       }
     }
-  });
+  );
 });
 
 /* // 3. Add Product to Cart
@@ -168,7 +184,7 @@ app.get("/cart/items", function (req, res) {
 // Get cart items count
 app.get("/cart/items/count", (req, res) => {
   db.query(
-    'SELECT COUNT(*) as "count" FROM CartItem WHERE SessionID = ?',
+    'SELECT COUNT(*) AS "count" FROM CartItem WHERE SessionID = ?',
     [req.sessionID],
     (error, results) => {
       if (error) {
