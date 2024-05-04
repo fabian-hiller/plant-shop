@@ -38,7 +38,7 @@ app.get("/plants", (_, res) => {
   );
 });
 
-// Get plant details
+// Get details of plant
 app.get("/plants/:PlantID", (req, res) => {
   db.query(
     "SELECT PlantID, PlantName, ImageURL FROM Plant WHERE PlantID = ?",
@@ -73,7 +73,7 @@ app.get("/plants/:PlantID", (req, res) => {
   );
 });
 
-// Add plant to cart
+// Add plant to cart of session
 app.post("/cart/items", (req, res) => {
   db.query(
     "INSERT INTO CartItem(PlantID, PlantSizeID, SessionID) VALUES(?, ?, ?)",
@@ -89,118 +89,22 @@ app.post("/cart/items", (req, res) => {
   );
 });
 
-/* // 3. Add Product to Cart
-
-app.post('/cart/items', function (req, res) {
-	// Get PlantId from the URL query parameter
-	const urlParams = new URLSearchParams(window.location.search);
-	const plantId = parseInt(urlParams.get("id"));
-	console.log(urlParams);
-	console.log(plantId);
-	
-	let query1 = 'select distinct plant.PlantId, PlantName, ImageURL, price as "StartPrice" from plant, plantsize where plant.plantid=plantsize.plantid AND plantsize="small"';
-	db.query1(query1, function (error, results, fields) {
-		if (error) {
-			res.status(500).send('Internal Error');
-		} else {
-			const plantList = res.json(result);
-		}
-	});
-	
-	// if plantid is same as the plant id in the platlist
-	const desiredPlant = plantList.find((plant) => plant.PlantId === plantId);
-	// get
-	if (desiredPlant) {
-		console.log(desiredPlant.PlantName);
-		// Set plant name and start price
-		plantItem.querySelector("h2").textContent = desiredPlant.PlantName;
-		plantItem.querySelector("p").textContent =
-			`Available from $${desiredPlant.StartPrice}`;
-		// Set plant image
-		plantItem.querySelector("img").src = desiredPlant.ImageURL;
-		plantItem.querySelector("img").alt = `${desiredPlant.PlantName} plant`;
-	} else {
-		console.log(`Plant with PlantId ${plantId} not found.`);
-	}
-	
-	const size = req.params['size'];
-	let query2 = 'select plantname, plantsize, price from plant, plantsize where plantsize.plantid=plant.plantid AND plant.plantid=' + plantId + ' AND plantsize="small"';
-	db.query2(query2, function (error, results, fields) {
-		if (error) {
-			res.status(500).send('Internal Error');
-		} else {
-			res.json(results);
-			res.send("Was Added to the Cart");
-			app.use(session({
-				genid: function (req) {
-				console.log(uuid.v4());
-				},
-				secret: 'keyboard cat',
-				saveUninitialized: false,
-				resave: true,
-				cookie: { secure: true }
-			}));
-		}
-	});
-
-	app.get('/cart/items', function(req, res) {
-		if (error) {
-			app.use(session({
-				genid: function (req) {
-				const sessionID = uuid.v4();
-				console.log(sessionID);
-				},
-				secret: 'keyboard cat',
-				saveUninitialized: false,
-				resave: true,
-				cookie: { secure: true }
-			}));
-			app.use(session({
-				genid: function (req) {
-				const cartItemID = uuid.v4();
-				console.log(sessionID);
-				},
-				secret: 'keyboard cat',
-				saveUninitialized: false,
-				resave: true,
-				cookie: { secure: true }
-			}));
-			let query3 = 'insert into cartitems (cartItemID, plantID, PlantSizeID, sessionID) values ' +  ;
-			db.query3(error, results, fields) {
-				res.send("Was Added To The Cart")
-			}
-		}
-	// if cart is empty
-		// generate a session ID
-			/*app.use(session({
-				genid: function (req) {
-				return genuuid()
-				},
-				secret: 'keyboard cat',
-				resave: false,
-				cookie: { secure: false }
-			})) */
-
-// else
-// use previously generated session ID
-// 'insert into table cartitems (cartitemid, sessionid,) */
-
-// Get cart items
-app.get("/cart/items", function (req, res) {
-  let query = "select * from cartitem";
-  db.query(query, function (error, results, fields) {
-    if (error) {
-      res.status(500).send("Internal Error");
-    } else {
-      if (results.length === 0) {
-        res.status(500).send("Not Found");
+// Get cart items of session
+app.get("/cart/items", (req, res) => {
+  db.query(
+    "SELECT CartItemID, PlantName, ImageURL, PlantSize, Price FROM CartItem JOIN Plant ON CartItem.PlantID = Plant.PlantID JOIN PlantSize ON CartItem.PlantSizeID = PlantSize.PlantSizeID WHERE SessionID = ?",
+    [req.sessionID],
+    (error, results) => {
+      if (error) {
+        res.status(500).send("Internal Error");
+      } else {
         res.json(results);
       }
     }
-  });
+  );
 });
 
-// Get cart items count
+// Get cart items count of session
 app.get("/cart/items/count", (req, res) => {
   db.query(
     'SELECT COUNT(*) AS "count" FROM CartItem WHERE SessionID = ?',
@@ -215,19 +119,17 @@ app.get("/cart/items/count", (req, res) => {
   );
 });
 
-// Remove item from cart
-app.delete("/cart/items/:cartitemid", function (req, res) {
-  const id = req.params["cartitemid"];
-  let query = "delete from cartitem where cartitemid =" + cartitemid;
-  db.query(query, function (error, results, fields) {
-    if (error) {
-      res.status(500).send("Internal Error");
-    } else {
-      if (results.length === 0) {
-        res.status(500).send("Not Found");
-        res.json(results);
-        res.post("Item removed.");
+// Remove item from cart of session
+app.delete("/cart/items/:CartItemID", (req, res) => {
+  db.query(
+    "DELETE FROM CartItem WHERE CartItemID = ? AND SessionID = ?",
+    [req.params["CartItemID"], req.sessionID],
+    (error) => {
+      if (error) {
+        res.status(500).send("Internal Error");
+      } else {
+        res.send("Success");
       }
     }
-  });
+  );
 });
