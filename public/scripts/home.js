@@ -2,50 +2,27 @@
 const plantListElement = document.getElementById("plant-list");
 const plantItemTemplate = document.getElementById("plant-item");
 
-// TODO: Replace code and fetch list from server
-const plantList = [
-  {
-    PlantId: 1,
-    PlantName: "Pianola",
-    ImageURL: "/images/pianola.jpg",
-    StartPrice: 43,
-  },
-  {
-    PlantId: 2,
-    PlantName: "Aragoda",
-    ImageURL: "/images/aragoda.jpg",
-    StartPrice: 36,
-  },
-  {
-    PlantId: 3,
-    PlantName: "Unosao",
-    ImageURL: "/images/unosao.jpg",
-    StartPrice: 68,
-  },
-  {
-    PlantId: 4,
-    PlantName: "Wonabu",
-    ImageURL: "/images/wonabu.jpg",
-    StartPrice: 52,
-  },
-];
+// Fetch plant list from server
+const plantList = await (await fetch("/plants")).json();
 
 // Add items to plant list
-for (const plant of plantList) {
+for (const plantItem of plantList) {
   // Clone plant item template
   const plantItemElement = plantItemTemplate.content.cloneNode(true);
 
   // Set link to plant detail page
-  plantItemElement.querySelector("a").href = `/plant.html?id=${plant.PlantId}`;
+  plantItemElement.querySelector("a").href =
+    `/plant.html?id=${plantItem.PlantID}`;
 
   // Set plant name and start price
-  plantItemElement.querySelector("h2").textContent = plant.PlantName;
+  plantItemElement.querySelector("h2").textContent = plantItem.PlantName;
   plantItemElement.querySelector("p").textContent =
-    `Available from $${plant.StartPrice}`;
+    `Available from $${plantItem.StartPrice}`;
 
   // Set plant image
-  plantItemElement.querySelector("img").src = plant.ImageURL;
-  plantItemElement.querySelector("img").alt = `${plant.PlantName} plant`;
+  const plantImageElement = plantItemElement.querySelector("img");
+  plantImageElement.src = plantItem.ImageURL;
+  plantImageElement.alt = `${plantItem.PlantName} plant`;
 
   // Append plant item to list
   plantListElement.appendChild(plantItemElement);

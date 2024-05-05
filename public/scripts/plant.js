@@ -1,86 +1,56 @@
-// get plant item
-const plantItem = document.getElementById("plant-item");
-// get size of the plants through selecting the size
-const smallButton = document.getElementById("small-button");
-const mediumButton = document.getElementById("medium-button");
-const largeButton = document.getElementById("large-button");
-const cancel = document.getElementById("cancel-button");
+// Get plant ID from URL search parameters
+const searchParams = new URLSearchParams(window.location.search);
+const plantId = parseInt(searchParams.get("id"));
 
-function onClickSmallSize() {
-  mediumButton.disabled = true;
-  largeButton.disabled = true;
+// Fetch plant item from server
+const plantItem = await (await fetch(`/plants/${plantId}`)).json();
+
+// Get HTML main element
+const mainElement = document.querySelector("main");
+
+// Set plant name and start price
+mainElement.querySelector("h1").textContent = plantItem.PlantName;
+mainElement.querySelector("p").textContent =
+  `Available from $${plantItem.Sizes[0].Price}`;
+
+// Set plant image
+const plantImageElement = mainElement.querySelector("img");
+plantImageElement.src = plantItem.ImageURL;
+plantImageElement.alt = `${plantItem.PlantName} plant`;
+
+// Get HTML form element
+const formElement = mainElement.querySelector("form");
+
+// Set value of hidden plant ID input
+formElement.querySelector("input").value = plantItem.PlantID;
+
+// Get HTML select element
+const selectElement = mainElement.querySelector("select");
+
+// Add options to select element
+for (const sizeItem of plantItem.Sizes) {
+  const optionElement = document.createElement("option");
+  optionElement.value = sizeItem.PlantSizeID;
+  optionElement.textContent = `${sizeItem.PlantSize} ($${sizeItem.Price})`;
+  selectElement.appendChild(optionElement);
 }
 
-function onClickMediumSize() {
-  smallButton.disabled = true;
-  largeButton.disabled = true;
-}
+// Add form submission event listener
+formElement.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-function onClickLargeSize() {
-  smallButton.disabled = true;
-  mediumButton.disabled = true;
-}
+  // Create form data object
+  const formData = new FormData(formElement);
 
-function onClickCancel() {
-  smallButton.disabled = false;
-  mediumButton.disabled = false;
-  largeButton.disabled = false;
-}
+  // Send form data to server
+  await fetch("/cart/items", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(Object.fromEntries(formData)),
+  });
 
-function onAddToCart() {
-  //replace - post cartItems database
-  const cartButtonElement = document.getElementById("cart-button");
-  const cartCount = 1;
-  cartButtonElement.querySelector("span").textContent = cartCount;
-}
-
-// TODO: Replace code and fetch list from server
-const plantList = [
-  {
-    PlantId: 1,
-    PlantName: "Pianola",
-    ImageURL: "/images/pianola.jpg",
-    StartPrice: 43,
-  },
-  {
-    PlantId: 2,
-    PlantName: "Aragoda",
-    ImageURL: "/images/aragoda.jpg",
-    StartPrice: 36,
-  },
-  {
-    PlantId: 3,
-    PlantName: "Unosao",
-    ImageURL: "/images/unosao.jpg",
-    StartPrice: 68,
-  },
-  {
-    PlantId: 4,
-    PlantName: "Wonabu",
-    ImageURL: "/images/wonabu.jpg",
-    StartPrice: 52,
-  },
-];
-
-// Get PlantId from the URL query parameter
-const urlParams = new URLSearchParams(window.location.search);
-const plantId = parseInt(urlParams.get("id"));
-console.log(urlParams);
-console.log(plantId);
-
-// if plantid is same as the plant id in the platlist
-const desiredPlant = plantList.find((plant) => plant.PlantId === plantId);
-// get
-if (desiredPlant) {
-  console.log(desiredPlant.PlantName);
-
-  // Set plant name and start price
-  plantItem.querySelector("h2").textContent = desiredPlant.PlantName;
-  plantItem.querySelector("p").textContent =
-    `Available from $${desiredPlant.StartPrice}`;
-  // Set plant image
-  plantItem.querySelector("img").src = desiredPlant.ImageURL;
-  plantItem.querySelector("img").alt = `${desiredPlant.PlantName} plant`;
-} else {
-  console.log(`Plant with PlantId ${plantId} not found.`);
-}
+  // Redirect to cart page
+  window.location.href = "/cart.html";
+});
