@@ -133,3 +133,9 @@ app.delete("/cart/items/:CartItemID", (req, res) => {
     }
   );
 });
+
+// Error page
+app.get("/error", (req, res) => {
+  res.set("Content-Type", "text/plain");
+  res.status(400).send('Error, Bad Request!');
+});
