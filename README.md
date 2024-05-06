@@ -44,7 +44,7 @@ SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE table_schema=
 
 ## Setup the plant-shop API:
 
-1. Navigate into the directory where the plant-shop files are stored. Then run the following command to install all the dependencies:
+1. Navigate into the directory where the plant-shop files are stored. Then run the following command in your terminal to install all the dependencies:
    ```bash
    npm install
    
