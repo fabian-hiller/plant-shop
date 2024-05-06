@@ -42,3 +42,15 @@ SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE table_schema=
 
 **Note:** It is not mandatory to fill out the other fields to run the web server in your local environment.
 
+## Setup the plant-shop API:
+
+1. Navigate into the directory where the plant-shop files are stored. Then run the following command to install all the dependencies:
+   ```bash
+   npm install
+   ```bash
+2. Start the server by running the following command:
+    ```bash
+   npm start
+   ```bash
+3. Once the API server is running, you can access it locally via http://localhost:3000 in your web browser.
+
