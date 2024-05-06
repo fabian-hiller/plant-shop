@@ -92,7 +92,7 @@ app.post("/cart/items", (req, res) => {
 // Get cart items of session
 app.get("/cart/items", (req, res) => {
   db.query(
-    "SELECT CartItemID, Plant.PlantID, PlantName, ImageURL, PlantSize, Price FROM CartItem JOIN Plant ON CartItem.PlantID = Plant.PlantID JOIN PlantSize ON CartItem.PlantSizeID = PlantSize.PlantSizeID WHERE SessionID = ?",
+    "SELECT CartItemID, PlantName, ImageURL, PlantSize, Price FROM CartItem JOIN Plant ON CartItem.PlantID = Plant.PlantID JOIN PlantSize ON CartItem.PlantSizeID = PlantSize.PlantSizeID WHERE SessionID = ?",
     [req.sessionID],
     (error, results) => {
       if (error) {
@@ -132,4 +132,10 @@ app.delete("/cart/items/:CartItemID", (req, res) => {
       }
     }
   );
+});
+
+// Error page
+app.get("/error", (req, res) => {
+  res.set("Content-Type", "text/plain");
+  res.status(400).send('Error, Bad Request!');
 });
