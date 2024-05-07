@@ -2,6 +2,8 @@
 
 Welcome to the Plant Shop repository. Please follow the steps below to get started.
 
+> Alternatively, you can also watch our setup video on YouTube: [https://youtu.be/aOTQdAV4o4E](https://youtu.be/aOTQdAV4o4E)
+
 ## Setup plant-shop database
 
 Step 1: Start your local MySQL database server using the CLI or your operating system's GUI.
@@ -76,3 +78,17 @@ npm start
 ```
 
 Step 9: Once the web server is running, you can access the website via `http://localhost:3000` in your web browser.
+
+## Screenshots of our website
+
+### Home page
+
+![Home page](./screenshots/home-page.jpg)
+
+### Plant page
+
+![Plant page](./screenshots/plant-page.jpg)
+
+### Cart page
+
+![Cart page](./screenshots/cart-page.jpg)
