@@ -15,14 +15,13 @@ main p {
   color: #5e5956;
   margin-top: 20px;
 }
-main button {
-  display: block;
-  margin: 30px auto 0 auto;
+main > a {
+  display: table;
+  margin: 60px auto 0 auto;
   padding: 13px 22px;
   font-size: 16px;
   color: #ffffff;
   background-color: #1a130e;
-  border: none;
   cursor: pointer;
 }
 @media screen and (min-width: 768px) {
@@ -36,8 +35,8 @@ main button {
     font-size: 22px;
     margin-top: 30px;
   }
-  main button {
-    margin-top: 40px;
+  main > a {
+    margin-top: 80px;
     padding: 14px 23px;
     font-size: 18px;
   }
@@ -53,8 +52,8 @@ main button {
     font-size: 30px;
     margin-top: 40px;
   }
-  main button {
-    margin-top: 50px;
+  main > a {
+    margin-top: 100px;
     padding: 16px 26px;
     font-size: 20px;
   }
@@ -72,6 +71,7 @@ main button {
   width: 100%;
   display: block;
   box-sizing: border-box;
+  position: relative;
 }
 .cart-list li + li {
   margin-top: 10px;
@@ -98,7 +98,7 @@ main button {
   color: #5e5956;
   margin-top: 10px;
 }
-.cart-list img {
+.cart-list a img {
   position: absolute;
   z-index: -1;
   top: 0;
@@ -106,6 +106,24 @@ main button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.cart-list form {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+.cart-list button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  background-color: #1a130e;
+  border: none;
+}
+.cart-list button img {
+  height: 18px;
 }
 @media screen and (min-width: 768px) {
   .cart-list {
@@ -127,6 +145,17 @@ main button {
     font-size: 18px;
     margin-top: 15px;
   }
+  .cart-list form {
+    bottom: 25px;
+    right: 25px;
+  }
+  .cart-list button {
+    width: 50px;
+    height: 50px;
+  }
+  .cart-list button img {
+    height: 21px;
+  }
 }
 @media screen and (min-width: 1024px) {
   .cart-list {
@@ -147,5 +176,16 @@ main button {
   .cart-list p {
     font-size: 22px;
     margin-top: 20px;
+  }
+  .cart-list form {
+    bottom: 40px;
+    right: 40px;
+  }
+  .cart-list button {
+    width: 60px;
+    height: 60px;
+  }
+  .cart-list button img {
+    height: 24px;
   }
 }
