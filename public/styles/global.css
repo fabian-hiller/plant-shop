@@ -24,9 +24,6 @@ body {
   justify-content: space-between;
   padding: 15px;
 }
-.header a:only-child {
-  margin-left: auto;
-}
 .header a {
   display: flex;
   align-items: center;

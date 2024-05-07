@@ -1,4 +1,4 @@
-/* main content */
+/* Cart info */
 main {
   margin: 80px 0;
 }
@@ -23,6 +23,7 @@ main > a {
   color: #ffffff;
   background-color: #1a130e;
   cursor: pointer;
+  text-decoration: none;
 }
 @media screen and (min-width: 768px) {
   main {
@@ -121,6 +122,7 @@ main > a {
   position: relative;
   background-color: #1a130e;
   border: none;
+  cursor: pointer;
 }
 .cart-list button img {
   height: 18px;

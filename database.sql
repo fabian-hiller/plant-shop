@@ -1,4 +1,5 @@
 /* To drop database if necessary */
+
 DROP DATABASE IF EXISTS plant_shop_database;
 
 /* To create database */
@@ -30,7 +31,6 @@ CREATE TABLE CartItem (
     FOREIGN KEY (PlantID) REFERENCES Plant(PlantID) ON DELETE CASCADE,
     FOREIGN KEY (PlantSizeID) REFERENCES PlantSize(PlantSizeID) ON DELETE CASCADE
 );
-
 
 /* To insert values into Plants table */
 
@@ -80,7 +80,6 @@ VALUES(8, 'Medium', 3, 136.00);
 
 INSERT INTO PlantSize (PlantSizeID, PlantSize, PlantID, Price)
 VALUES(9, 'Large', 3, 204.00);
-
 
 /* For the Wonabu plant */
 

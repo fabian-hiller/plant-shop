@@ -5,6 +5,8 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+
+// Import database connection
 const db = require("./database");
 
 // Setup express app
@@ -21,7 +23,7 @@ app.use(
     saveUninitialized: true,
     resave: false,
     cookie: { maxAge: 2.592e9 }, // 30 days
-  })
+  }),
 );
 
 // Get all plants
@@ -34,7 +36,7 @@ app.get("/plants", (_, res) => {
       } else {
         res.json(results);
       }
-    }
+    },
   );
 });
 
@@ -65,11 +67,11 @@ app.get("/plants/:PlantID", (req, res) => {
                   res.json(plant);
                 }
               }
-            }
+            },
           );
         }
       }
-    }
+    },
   );
 });
 
@@ -85,7 +87,7 @@ app.post("/cart/items", (req, res) => {
       } else {
         res.send("Success");
       }
-    }
+    },
   );
 });
 
@@ -100,7 +102,7 @@ app.get("/cart/items", (req, res) => {
       } else {
         res.json(results);
       }
-    }
+    },
   );
 });
 
@@ -115,7 +117,7 @@ app.get("/cart/items/count", (req, res) => {
       } else {
         res.json(results[0].count);
       }
-    }
+    },
   );
 });
 
@@ -130,12 +132,6 @@ app.delete("/cart/items/:CartItemID", (req, res) => {
       } else {
         res.send("Success");
       }
-    }
+    },
   );
-});
-
-// Error page
-app.get("/error", (req, res) => {
-  res.set("Content-Type", "text/plain");
-  res.status(400).send('Error, Bad Request!');
 });
